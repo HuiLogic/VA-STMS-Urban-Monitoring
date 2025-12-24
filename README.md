@@ -51,6 +51,15 @@ To execute the full suite of experiments and generate the figures/tables reporte
 python experiments/run_all.py
   ```
 
+🔍 Implementation of Algorithm 2 (Surrogate Model)
+
+As described in Section 6.3 of the paper, processing 100,000 agents via live LLM APIs is computationally prohibitive. Therefore, this repository implements the surrogate model version of Algorithm 2:
+
+*   File: `core/sensors.py` -> `observe_llm()`
+*   Logic: It simulates semantic sensing by sampling from the state-dependent distribution $\mathcal{N}(\mathbf{S}_g, \mathbf{R}_{LLM}(d_6))$, where:
+    $$\mathbf{R}_{LLM}(d_6) = \mathbf{R}_{base} \cdot \exp(\kappa d_6)$$
+*   Calibration: The surrogate is calibrated to match the error bounds observed in frontier models like GPT-4, as detailed in the methodology section.
+
 📊 Experimental Results
 The simulation framework validates several key insights from the paper:
 Detection Lag: LLM-augmented fusion reduces crisis detection lags by 80-90% compared to quarterly administrative baselines.
